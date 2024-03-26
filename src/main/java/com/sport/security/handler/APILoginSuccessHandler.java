@@ -30,7 +30,7 @@ public class APILoginSuccessHandler implements AuthenticationSuccessHandler {
         log.info(authentication);
         log.info(authentication.getName());
 
-        Map<String, Object> claim = Map.of("mid", authentication.getName());
+        Map<String, Object> claim = Map.of("email", authentication.getName());
 
         String accessToken = jwtUtil.generateToken(claim, 1);
 

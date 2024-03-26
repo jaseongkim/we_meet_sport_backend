@@ -27,7 +27,7 @@ public class TokenCheckFilter extends OncePerRequestFilter {
 
         String path = request.getRequestURI();
 
-        if(!path.startsWith("/member/")) {
+        if(!path.startsWith("/test/")) {
             filterChain.doFilter(request, response);
             return;
         }
