@@ -34,6 +34,7 @@ public class JWTUtil {
 
         //유효 기간
         int time = (60 * 24) * days;
+//        int time = (1) * days;
 
         String jwtStr = Jwts.builder()
                 .setHeader(headers)
