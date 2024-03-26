@@ -15,7 +15,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class MemberController {
 
-    @GetMapping("/login")
+    @GetMapping("/test")
     public Map<String, String> test() {
 
         Map<String, String>  map = new HashMap<>();

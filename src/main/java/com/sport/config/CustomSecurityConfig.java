@@ -2,6 +2,7 @@ package com.sport.config;
 
 import com.sport.security.APIUserDetailsService;
 import com.sport.security.filter.APILoginFilter;
+import com.sport.security.filter.TokenCheckFilter;
 import com.sport.security.handler.APILoginSuccessHandler;
 import com.sport.util.JWTUtil;
 import lombok.RequiredArgsConstructor;
@@ -59,10 +60,15 @@ public class CustomSecurityConfig {
 
         http.addFilterBefore(apiLoginFilter, UsernamePasswordAuthenticationFilter.class);
 
+        http.addFilterBefore(tokenCheckFilter(jwtUtil), UsernamePasswordAuthenticationFilter.class);
+
         http.csrf().disable(); // CSRF 토큰 비활성화
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS); // 세션 사용하지 않음
 
         return http.build();
+    }
+    private TokenCheckFilter tokenCheckFilter(JWTUtil jwtUtil) {
+        return new TokenCheckFilter(jwtUtil);
     }
 
     @Bean
