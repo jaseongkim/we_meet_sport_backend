@@ -4,10 +4,7 @@ import com.sport.dto.APIUserJoinDTO;
 import com.sport.service.APIUserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -36,6 +33,16 @@ public class APIUserController {
         return map;
     }
 
+    @GetMapping("test")
+    public Map<String, String> test(){
+
+        Map<String, String> map = new HashMap<>();
+
+        map.put("테스트", "테스트");
+
+        return map;
+
+    }
 
 
 
