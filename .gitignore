@@ -1,7 +1,7 @@
 HELP.md
 .gradle
 build/
-resource/Wallet_XBZFQMF764B1UVWL/
+resources/Wallet_XBZFQMF764B1UVWL/
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
 !**/src/test/**/build/
