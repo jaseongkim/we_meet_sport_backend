@@ -1,6 +1,7 @@
 package com.sport.repository;
 
 import com.sport.domain.APIUser;
+import com.sport.domain.APIUserRole;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,11 +22,12 @@ public class APIUserRepositoryTests {
 
     @Test
     public void testInserts() {
-        IntStream.rangeClosed(1, 100).forEach(i -> {
+        IntStream.rangeClosed(1, 10).forEach(i -> {
             APIUser apiUser = APIUser.builder()
-                    .mid("apiuser" + i)
+                    .email("apiuser" + i)
                     .mpw(passwordEncoder.encode("1111"))
                     .build();
+            apiUser.addRole(APIUserRole.USER);
 
             apiUserRepository.save(apiUser);
         });
