@@ -32,7 +32,7 @@ public class APIUserDetailsService implements UserDetailsService {
 
         APIUserDTO apiUserDTO = new APIUserDTO(
                 apiUser.getEmail(),
-                apiUser.getMpw(),
+                apiUser.getPassword(),
                 apiUser.getRoleSet().stream().map(apiUserRole -> new SimpleGrantedAuthority("ROLE_"+apiUser.getRoleSet()))
                                 .collect(Collectors.toList())
         );

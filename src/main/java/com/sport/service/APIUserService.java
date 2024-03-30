@@ -2,9 +2,11 @@ package com.sport.service;
 
 import com.sport.dto.APIUserJoinDTO;
 
+import java.util.Map;
+
 public interface APIUserService {
 
-    void signup(APIUserJoinDTO apiUserJoinDTO);
+    Map<String, String> signup(APIUserJoinDTO apiUserJoinDTO);
 
 
 }

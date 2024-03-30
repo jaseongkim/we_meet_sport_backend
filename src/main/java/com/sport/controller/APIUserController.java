@@ -20,15 +20,11 @@ public class APIUserController {
     @PostMapping("/signup")
     public Map<String, String> signup(@RequestBody APIUserJoinDTO apiUserJoinDTO) {
 
-        Map<String, String>  map = new HashMap<>();
+        Map<String, String>  map = null;
 
         log.info(apiUserJoinDTO);
 
-        apiUserService.signup(apiUserJoinDTO);
-
-        log.info(apiUserJoinDTO);
-
-        map.put("result" , "success");
+        map = apiUserService.signup(apiUserJoinDTO);
 
         return map;
     }

@@ -19,7 +19,7 @@ public class APIUser {
     @Id
     private String email;
 
-    private String mpw;
+    private String password;
 
     private String nickName;
 
@@ -33,8 +33,8 @@ public class APIUser {
     @ColumnDefault(value = "CURRENT_TIMESTAMP")
     private Date regDate;
 
-    public void changeMpw(String mpw){
-        this.mpw = mpw;
+    public void changeMpw(String password){
+        this.password = password;
     }
 
     public void changeNickName(String nickName) {
