@@ -30,7 +30,7 @@ public class APIUserServiceImpl implements APIUserService {
     public Map<String,String> signup(APIUserJoinDTO apiUserJoinDTO)  {
         Map<String, String> map = new HashMap<>();
 
-        if(apiUserJoinDTO.getMpw().length() >= 10) {
+        if(apiUserJoinDTO.getPassword().length() >= 10) {
             map = Map.of("success", "false", "data", "비밀번호 오류");
             return map;
         } else if (apiUserJoinDTO.getNickName().length() >=10) {
@@ -48,7 +48,7 @@ public class APIUserServiceImpl implements APIUserService {
         }
 
         APIUser apiUser = modelMapper.map(apiUserJoinDTO, APIUser.class);
-        apiUser.changeMpw(passwordEncoder.encode(apiUserJoinDTO.getMpw()));
+        apiUser.changeMpw(passwordEncoder.encode(apiUserJoinDTO.getPassword()));
         apiUser.addRole(APIUserRole.USER);
 
         log.info("-----------------------------------------");

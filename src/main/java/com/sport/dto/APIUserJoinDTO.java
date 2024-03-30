@@ -6,7 +6,7 @@ import lombok.Data;
 public class APIUserJoinDTO {
 
     private String email;
-    private String mpw;
+    private String password;
     private String nickName;
     private String mobile;
 
