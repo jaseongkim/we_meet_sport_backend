@@ -34,7 +34,7 @@ dependencies {
     testAnnotationProcessor 'org.projectlombok:lombok'
 
     // orcle cloud
-    runtimeOnly 'com.oracle.database.jdbc:ojdbc11'
+    runtimeOnly 'com.oracle.database.jdbc:ojdbc11:21.5.0.0'
     implementation 'com.oracle.database.security:oraclepki'
     implementation 'com.oracle.database.security:osdt_cert'
     implementation 'com.oracle.database.security:osdt_core'
