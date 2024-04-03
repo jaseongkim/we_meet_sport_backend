@@ -32,6 +32,7 @@ public class APILoginSuccessHandler implements AuthenticationSuccessHandler {
 
         log.info(authentication);
         log.info(authentication.getName());
+        log.info("apiUserDTO" + apiUserDTO);
 
         Map<String, Object> claim = Map.of("email", authentication.getName(), "nickName", apiUserDTO.getNickName(), "mobile" , apiUserDTO.getMobile());
 

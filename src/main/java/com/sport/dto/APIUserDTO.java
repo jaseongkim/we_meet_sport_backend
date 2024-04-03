@@ -18,9 +18,6 @@ public class APIUserDTO extends User {
     private String nickName;
     private String mobile;
 
-
-
-
     public APIUserDTO(String username, String password, String nickName, String moblie,Collection<? extends GrantedAuthority> authorities) {
         super(username, password, authorities);
 
@@ -28,6 +25,7 @@ public class APIUserDTO extends User {
         this.password = password;
         this.nickName = nickName;
         this.mobile = moblie;
+
     }
 }
 
