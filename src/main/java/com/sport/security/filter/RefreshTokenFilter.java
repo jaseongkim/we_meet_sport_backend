@@ -154,7 +154,17 @@ public class RefreshTokenFilter extends OncePerRequestFilter {
 
         Gson gson = new Gson();
 
-        String jsonStr = gson.toJson(Map.of("accessToken", accessTokenValue, "refreshToken", refreshTokenValue));
+        Map<String, String> data = Map.of(
+                "accessToken", accessTokenValue,
+                "refreshToken", refreshTokenValue
+        );
+
+        Map<String, Object> resultMap = Map.of(
+                "success", true,
+                "data", data
+        );
+
+        String jsonStr = gson.toJson(resultMap);
 
         try {
             response.getWriter().println(jsonStr);

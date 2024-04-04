@@ -40,10 +40,11 @@ public class CustomRestAdvice {
     @ExceptionHandler({NoSuchElementException.class,
             EmptyResultDataAccessException.class})
     @ResponseStatus(HttpStatus.EXPECTATION_FAILED)
-    public ResponseEntity<Map<String, String>> handleNoSuchElement(Exception e) {
+    public ResponseEntity<Map<String, Object>> handleNoSuchElement(Exception e) {
 
-        Map<String, String> errorMap = new HashMap<>();
+        Map<String, Object> errorMap = new HashMap<>();
 
+        errorMap.put("success", false);
         errorMap.put("data", "No Such Element Exception");
 
         return ResponseEntity.badRequest().body(errorMap);

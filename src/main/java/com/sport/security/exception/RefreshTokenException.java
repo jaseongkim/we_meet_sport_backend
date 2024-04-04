@@ -6,7 +6,6 @@ import org.springframework.http.MediaType;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Date;
 import java.util.Map;
 
 public class RefreshTokenException extends RuntimeException {
@@ -29,7 +28,7 @@ public class RefreshTokenException extends RuntimeException {
 
         Gson gson = new Gson();
 
-        String responseStr = gson.toJson(Map.of("msg", errorCase.name(), "time", new Date()));
+        String responseStr = gson.toJson(Map.of("success", false, "data", errorCase.name()));
 
         try {
             response.getWriter().println(responseStr);

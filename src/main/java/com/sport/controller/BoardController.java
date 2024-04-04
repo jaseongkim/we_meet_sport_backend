@@ -55,11 +55,13 @@ public class BoardController {
     }
 
     @GetMapping("/{boardNo}")
-    public BoardDTO getBoardByNo(@PathVariable("boardNo") Long boardNo){
+    public Map<String, Object> getBoardByNo(@PathVariable("boardNo") Long boardNo){
 
-        BoardDTO boardDTO = boardService.getBoardByNo(boardNo);
+        Map<String, Object> map = null;
 
-        return boardDTO;
+        map = boardService.getBoardByNo(boardNo);
+
+        return map;
     }
 
 }

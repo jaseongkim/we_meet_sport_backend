@@ -62,14 +62,16 @@ public class BoardServiceImpl implements BoardService {
 
         BoardDTO boardChangeDTO = modelMapper.map(board, BoardDTO.class);
 
-        map.put("success", true);
-        map.put("BoardDTO", boardChangeDTO);
+        Map<String, Object> resultMap = Map.of(
+                "success", true,
+                "data", boardChangeDTO
+        );
 
-        return map;
+        return resultMap;
     }
 
     @Override
-    public BoardDTO getBoardByNo(Long boardNo) {
+    public Map<String, Object> getBoardByNo(Long boardNo) {
 
         Optional<Board> result = boardRepository.findById(boardNo);
 
@@ -77,6 +79,11 @@ public class BoardServiceImpl implements BoardService {
 
         BoardDTO boardDTO = modelMapper.map(board, BoardDTO.class);
 
-        return boardDTO;
+        Map<String, Object> resultMap = Map.of(
+                "success", true,
+                "data", boardDTO
+        );
+
+        return resultMap;
     }
 }

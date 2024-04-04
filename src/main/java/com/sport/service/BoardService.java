@@ -10,6 +10,6 @@ public interface BoardService {
 
     Map<String, Object>  modify(Long boardNo, BoardDTO boardDTO, String email);
 
-    BoardDTO getBoardByNo(Long boardNo);
+    Map<String, Object> getBoardByNo(Long boardNo);
 
 }
