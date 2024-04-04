@@ -6,7 +6,7 @@ import java.util.Map;
 
 public interface APIUserService {
 
-    Map<String, String> signup(APIUserJoinDTO apiUserJoinDTO);
+    Map<String,Object> signup(APIUserJoinDTO apiUserJoinDTO);
 
 
 }

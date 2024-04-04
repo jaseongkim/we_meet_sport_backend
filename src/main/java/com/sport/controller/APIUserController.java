@@ -22,9 +22,9 @@ public class APIUserController {
     private final APIUserService apiUserService;
 
     @PostMapping("/signup")
-    public Map<String, String> signup(@RequestBody APIUserJoinDTO apiUserJoinDTO) {
+    public Map<String,Object> signup(@RequestBody APIUserJoinDTO apiUserJoinDTO) {
 
-        Map<String, String>  map = null;
+        Map<String,Object>  map = null;
 
         log.info(apiUserJoinDTO);
 
