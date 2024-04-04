@@ -54,6 +54,7 @@ public class BoardController {
         return map;
     }
 
+    // 게시글 조회
     @GetMapping("/{boardNo}")
     public Map<String, Object> getBoardByNo(@PathVariable("boardNo") Long boardNo){
 
@@ -63,5 +64,19 @@ public class BoardController {
 
         return map;
     }
+
+    // 게시글 삭제
+    @DeleteMapping("/api/{boardNo}")
+    public Map<String, Object> remove(@PathVariable("boardNo") Long boardNo, Principal principal) {
+
+        Map<String, Object> map = null;
+
+        String email = principal.getName();
+
+        map = boardService.remove(boardNo, email);
+
+        return map;
+    }
+
 
 }

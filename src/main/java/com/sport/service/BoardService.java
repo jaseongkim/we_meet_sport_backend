@@ -12,4 +12,6 @@ public interface BoardService {
 
     Map<String, Object> getBoardByNo(Long boardNo);
 
+    Map<String, Object> remove(Long boardNo, String email);
+
 }

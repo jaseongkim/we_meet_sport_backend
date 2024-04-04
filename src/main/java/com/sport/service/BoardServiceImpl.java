@@ -86,4 +86,33 @@ public class BoardServiceImpl implements BoardService {
 
         return resultMap;
     }
+
+    @Override
+    public Map<String, Object> remove(Long boardNo, String email) {
+
+        Map<String, Object> map = new HashMap<>();
+
+        Optional<Board> result = boardRepository.findById(boardNo);
+
+        Board board = result.orElseThrow();
+
+        if(!board.getApiUser().getEmail().equals(email)){
+            map.put("success", false);
+            map.put("data", "permissionDenied");
+            return map;
+        }
+
+        try{
+            boardRepository.deleteById(board.getBoardNo());
+        }catch (Exception e) {
+            map.put("success", false);
+            map.put("data", e.getMessage());
+        }
+
+        map.put("success", true);
+
+        return map;
+    }
+
+
 }
