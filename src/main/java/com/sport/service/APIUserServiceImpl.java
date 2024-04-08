@@ -27,23 +27,23 @@ public class APIUserServiceImpl implements APIUserService {
     private final PasswordEncoder passwordEncoder;
 
     @Override
-    public Map<String,String> signup(APIUserJoinDTO apiUserJoinDTO)  {
-        Map<String, String> map = new HashMap<>();
+    public Map<String,Object> signup(APIUserJoinDTO apiUserJoinDTO)  {
+        Map<String,Object> map = new HashMap<>();
 
         if(apiUserJoinDTO.getPassword().length() >= 10) {
-            map = Map.of("success", "false", "data", "비밀번호 오류");
+            map = Map.of("success", false, "data", "비밀번호 오류");
             return map;
         } else if (apiUserJoinDTO.getNickName().length() >=10) {
-            map = Map.of("success", "false", "data", "닉네임 오류");
+            map = Map.of("success", false, "data", "닉네임 오류");
             return map;
         } else if (apiUserRepository.existsBynickName(apiUserJoinDTO.getNickName())) {
-            map = Map.of("success", "false", "data", "닉네임 중복");
+            map = Map.of("success", false, "data", "닉네임 중복");
             return map;
         } else if (apiUserRepository.existsByemail(apiUserJoinDTO.getEmail())) {
-            map = Map.of("success", "false", "data", "이메일 중복");
+            map = Map.of("success", false, "data", "이메일 중복");
             return map;
         } else if (!emailValidator(apiUserJoinDTO.getEmail())) {
-            map = Map.of("success", "false", "data", "이메일 오류");
+            map = Map.of("success", false, "data", "이메일 오류");
             return map;
         }
 
@@ -57,7 +57,7 @@ public class APIUserServiceImpl implements APIUserService {
 
         apiUserRepository.save(apiUser);
 
-        map = Map.of("success", "true");
+        map = Map.of("success", true);
 
         return map;
     }
