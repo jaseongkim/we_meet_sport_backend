@@ -38,14 +38,14 @@ public class APILoginFilter extends AbstractAuthenticationProcessingFilter {
 
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
                 jsonData.get("email"),
-                jsonData.get("mpw"));
+                jsonData.get("password"));
 
         return getAuthenticationManager().authenticate(authenticationToken);
     }
 
     private Map<String, String> parseRequestJSON(HttpServletRequest request) {
 
-        //JSON 데이터를 분석해서 email, mpw 전달 값을 Map으로 처리
+        //JSON 데이터를 분석해서 email, password 전달 값을 Map으로 처리
         try(Reader reader = new InputStreamReader(request.getInputStream())){
 
             Gson gson = new Gson();

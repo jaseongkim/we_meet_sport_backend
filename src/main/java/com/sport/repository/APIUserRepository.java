@@ -13,4 +13,9 @@ public interface APIUserRepository extends JpaRepository<APIUser, String> {
     @Query("select u from APIUser u where u.email = :email")
     Optional<APIUser> getWithRoles(String email);
 
+    //닉네임 중복검사
+    boolean existsBynickName(String nickName);
+
+    // 이메일 중복검사
+    boolean existsByemail(String email);
 }

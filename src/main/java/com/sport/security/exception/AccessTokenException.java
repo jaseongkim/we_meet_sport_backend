@@ -5,7 +5,6 @@ import org.springframework.http.MediaType;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Date;
 import java.util.Map;
 
 public class AccessTokenException extends RuntimeException{
@@ -47,7 +46,7 @@ public class AccessTokenException extends RuntimeException{
 
         Gson gson = new Gson();
 
-        String responseStr = gson.toJson(Map.of("msg", token_error.getMsg(), "time", new Date()));
+        String responseStr = gson.toJson(Map.of("success", false, "data", token_error.getMsg()));
 
         try {
             response.getWriter().println(responseStr);
