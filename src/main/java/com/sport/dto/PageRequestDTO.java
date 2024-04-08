@@ -18,23 +18,23 @@ import java.net.URLEncoder;
 public class PageRequestDTO {
 
     @Builder.Default
-    private int page = 1;
+    private int pageNo = 1;
 
     @Builder.Default
-    private int size = 10;
+    private int pageSize = 10;
 
-    private String type;
+    private String searchOption;
 
-    private String keyword;
+    private String search;
 
-    public String[] getTypes() {
-        if(type == null || type.isEmpty()){
+    public String getSearchOption() {
+        if(searchOption == null || searchOption.isEmpty()){
             return null;
         }
-        return type.split("");
+        return searchOption;
     }
     public Pageable getPageable(String...props) {
-        return PageRequest.of(this.page -1, this.size, Sort.by(props).descending());
+        return PageRequest.of(this.pageNo -1, this.pageSize, Sort.by(props).descending());
     }
 
     private String link;
@@ -44,17 +44,17 @@ public class PageRequestDTO {
         if(link == null){
             StringBuilder builder = new StringBuilder();
 
-            builder.append("page=" + this.page);
+            builder.append("pageNo=" + this.pageNo);
 
-            builder.append("&size=" + this.size);
+            builder.append("&pageSize=" + this.pageSize);
 
-            if(type != null && type.length() > 0){
-                builder.append("&type=" + type);
+            if(searchOption != null && searchOption.length() > 0){
+                builder.append("&searchOption=" + searchOption);
             }
 
-            if(keyword != null){
+            if(search != null){
                 try {
-                    builder.append("&keyword=" + URLEncoder.encode(keyword,"UTF-8"));
+                    builder.append("&search=" + URLEncoder.encode(search,"UTF-8"));
                 } catch (UnsupportedEncodingException e) {
                 }
             }

@@ -12,7 +12,7 @@ import java.util.Date;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString(exclude = "apiuser")
+@ToString(exclude = "apiUser")
 @Table(name = "board")
 @SequenceGenerator(
         name = "SEQ_GENERATOR",

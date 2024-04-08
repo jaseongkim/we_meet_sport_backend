@@ -2,6 +2,7 @@ package com.sport.controller;
 
 import com.sport.dto.APIUserDTO;
 import com.sport.dto.BoardDTO;
+import com.sport.dto.PageRequestDTO;
 import com.sport.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -74,6 +75,17 @@ public class BoardController {
         String email = principal.getName();
 
         map = boardService.remove(boardNo, email);
+
+        return map;
+    }
+
+    // 게시글 전체 조회
+    @GetMapping("/list")
+    public Map<String, Object> list(@RequestBody PageRequestDTO pageRequestDTO){
+
+        Map<String, Object> map = null;
+
+        map = boardService.searchAll(pageRequestDTO);
 
         return map;
     }

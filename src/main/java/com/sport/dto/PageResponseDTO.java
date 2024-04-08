@@ -11,8 +11,8 @@ import java.util.List;
 public class PageResponseDTO<E> {
 
 
-    private int page;
-    private int size;
+    private int pageNO;
+    private int pageSize;
     private int total;
 
     //시작 페이지 번호
@@ -34,24 +34,22 @@ public class PageResponseDTO<E> {
             return;
         }
 
-        this.page = pageRequestDTO.getPage();
-        this.size = pageRequestDTO.getSize();
+        this.pageNO = pageRequestDTO.getPageNo();
+        this.pageSize = pageRequestDTO.getPageSize();
 
         this.total = total;
         this.dtoList = dtoList;
 
-        this.end = (int) (Math.ceil(this.page / 10.0)) * 10;
+        this.end = (int) (Math.ceil(this.pageNO / 10.0)) * 10;
 
         this.start = this.end - 9;
 
-        int last = (int) (Math.ceil((total / (double) size)));
+        int last = (int) (Math.ceil((total / (double) pageSize)));
 
         this.end = end > last ? last : end;
 
         this.prev = this.start > 1;
 
-        this.next = total > this.end * this.size;
-
+        this.next = total > this.end * this.pageSize;
     }
-
 }
