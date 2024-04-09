@@ -22,8 +22,6 @@ public class CustomRestAdvice {
     @ResponseStatus(HttpStatus.EXPECTATION_FAILED)
     public ResponseEntity<Map<String, String>> handleBindException(BindException e) {
 
-        log.error(e);
-
         Map<String, String> errorMap = new HashMap<>();
 
         if(e.hasErrors()) {
@@ -46,6 +44,18 @@ public class CustomRestAdvice {
 
         errorMap.put("success", false);
         errorMap.put("data", "No Such Element Exception");
+
+        return ResponseEntity.badRequest().body(errorMap);
+    }
+
+    @ExceptionHandler(Exception.class)
+    @ResponseStatus(HttpStatus.EXPECTATION_FAILED)
+    public ResponseEntity<Map<String, Object>> AllErrorLogHandle(Exception e) {
+
+        Map<String, Object> errorMap = new HashMap<>();
+
+        errorMap.put("success", false);
+        errorMap.put("data", e.getMessage());
 
         return ResponseEntity.badRequest().body(errorMap);
     }

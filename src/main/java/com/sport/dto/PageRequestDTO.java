@@ -27,6 +27,10 @@ public class PageRequestDTO {
 
     private String search;
 
+    private String category;
+
+    private String type;
+
     public String getSearchOption() {
         if(searchOption == null || searchOption.isEmpty()){
             return null;
@@ -48,7 +52,7 @@ public class PageRequestDTO {
 
             builder.append("&pageSize=" + this.pageSize);
 
-            if(searchOption != null && searchOption.length() > 0){
+            if(searchOption != null){
                 builder.append("&searchOption=" + searchOption);
             }
 
