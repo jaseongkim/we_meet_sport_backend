@@ -4,6 +4,7 @@ import com.sport.security.APIUserDetailsService;
 import com.sport.security.filter.APILoginFilter;
 import com.sport.security.filter.RefreshTokenFilter;
 import com.sport.security.filter.TokenCheckFilter;
+import com.sport.security.handler.APILoginFailHandler;
 import com.sport.security.handler.APILoginSuccessHandler;
 import com.sport.util.JWTUtil;
 import lombok.RequiredArgsConstructor;
@@ -64,6 +65,10 @@ public class CustomSecurityConfig {
         //APILoginSuccessHandler
         APILoginSuccessHandler successHandler = new APILoginSuccessHandler(jwtUtil);
         apiLoginFilter.setAuthenticationSuccessHandler(successHandler);
+
+        //APILoginFailHandler
+        APILoginFailHandler failHandler = new APILoginFailHandler();
+        apiLoginFilter.setAuthenticationFailureHandler(failHandler);
 
         http.addFilterBefore(apiLoginFilter, UsernamePasswordAuthenticationFilter.class);
 
