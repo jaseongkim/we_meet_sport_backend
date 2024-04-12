@@ -1,6 +1,5 @@
 package com.sport.domain;
 
-
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
@@ -42,6 +41,12 @@ public class Board {
 
     @Column(nullable = false)
     private String type;
+
+    @Column(nullable = false)
+    private String status;
+
+    @Column(nullable = false)
+    private Date matchDate;
 
     @Column(nullable = false, updatable = false, insertable = false)
     @ColumnDefault(value = "CURRENT_TIMESTAMP")

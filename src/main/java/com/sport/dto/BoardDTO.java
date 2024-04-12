@@ -26,6 +26,10 @@ public class BoardDTO {
 
     private String type;
 
+    private String status;
+
+    private Date matchDate;
+
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createdAt;
 }

@@ -7,7 +7,7 @@ import java.util.Map;
 
 public interface BoardService {
 
-    Map<String, Boolean> register(BoardDTO boardDTO);
+    Map<String, Object> register(BoardDTO boardDTO, Object principal);
 
     Map<String, Object>  modify(Long boardNo, BoardDTO boardDTO, String email);
 

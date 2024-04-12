@@ -1,6 +1,7 @@
 package com.sport.service;
 
 import com.sport.domain.Board;
+import com.sport.dto.APIUserDTO;
 import com.sport.dto.BoardDTO;
 import com.sport.dto.PageRequestDTO;
 import com.sport.dto.PageResponseDTO;
@@ -28,23 +29,35 @@ public class BoardServiceImpl implements BoardService {
     private final ModelMapper modelMapper;
 
     @Override
-    public Map<String, Boolean> register(BoardDTO boardDTO) {
+    public Map<String, Object> register(BoardDTO boardDTO, Object principal) {
 
-        Board board = modelMapper.map(boardDTO, Board.class);
+        Map<String, Object> map = new HashMap<>();
 
-        Map<String, Boolean> map = new HashMap<>();
-
-        try {
-            boardRepository.save(board);
-        } catch (Exception e) {
+        if (principal instanceof APIUserDTO) {
+            // principal 객체를 APIUserDTO 타입으로 캐스팅
+            APIUserDTO apiUserDTO = (APIUserDTO) principal;
+            boardDTO.setNickName(apiUserDTO.getNickName());
+            boardDTO.setEmail(apiUserDTO.getEmail());
+        } else {
+            // principal 객체가 APIUserDTO 타입이 아닌 경우의 처리
+            log.info("UserDetails is not an instance of APIUserDTO");
             map.put("success", false);
-            log.info(e.getMessage());
+            map.put("data", "UserDetails is not an instance of APIUserDTO");
             return map;
         }
-        map.put("success", true);
+
+        try {
+            Board board = modelMapper.map(boardDTO, Board.class);
+            Board responseBoard = boardRepository.save(board);
+            map.put("success", true);
+            map.put("data", responseBoard.getBoardNo());
+        } catch (Exception e) {
+            map.put("success", false);
+            map.put("data",e.getMessage());
+            return map;
+        }
 
         return map;
-
     }
 
     @Override
