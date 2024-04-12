@@ -81,7 +81,9 @@ public class BoardController {
 
     // 게시글 전체 조회
     @GetMapping("/list")
-    public Map<String, Object> list(@RequestBody PageRequestDTO pageRequestDTO){
+    public Map<String, Object> list(@ModelAttribute PageRequestDTO pageRequestDTO){
+
+        log.info("pageRequestDTO" + pageRequestDTO);
 
         Map<String, Object> map = null;
 
