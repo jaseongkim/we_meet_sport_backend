@@ -75,7 +75,9 @@ public class BoardController {
 
         Map<String, Object> map = null;
 
-        map = boardService.searchAll(pageRequestDTO);
+//        map = boardService.searchAll(pageRequestDTO);
+
+        map = boardService.searchWithReplyCount(pageRequestDTO);
 
         return map;
     }

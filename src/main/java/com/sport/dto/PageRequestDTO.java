@@ -7,9 +7,11 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.time.LocalDate;
 
 @Data
 @Builder
@@ -30,6 +32,14 @@ public class PageRequestDTO {
     private String category;
 
     private String type;
+
+    private Boolean status;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate from;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate to;
 
     public String getSearchOption() {
         if(searchOption == null || searchOption.isEmpty()){

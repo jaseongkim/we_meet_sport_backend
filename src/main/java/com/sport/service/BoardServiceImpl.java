@@ -1,10 +1,7 @@
 package com.sport.service;
 
 import com.sport.domain.Board;
-import com.sport.dto.APIUserDTO;
-import com.sport.dto.BoardDTO;
-import com.sport.dto.PageRequestDTO;
-import com.sport.dto.PageResponseDTO;
+import com.sport.dto.*;
 import com.sport.repository.BoardRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -13,11 +10,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Log4j2
 @Service
@@ -47,7 +43,11 @@ public class BoardServiceImpl implements BoardService {
         }
 
         try {
+            if(boardDTO.getStatus() == null){
+                boardDTO.setStatus(false);
+            }
             Board board = modelMapper.map(boardDTO, Board.class);
+
             Board responseBoard = boardRepository.save(board);
             map.put("success", true);
             map.put("data", responseBoard.getBoardNo());
@@ -75,7 +75,16 @@ public class BoardServiceImpl implements BoardService {
             return map;
         }
 
-        board.change(boardDTO.getTitle(), boardDTO.getContent());
+        log.info(boardDTO);
+
+        if(boardDTO.getMatchDate() == null) {
+            boardDTO.setMatchDate(board.getMatchDate());
+        }
+        if(boardDTO.getStatus() == null){
+            boardDTO.setStatus(board.getStatus());
+        }
+
+        board.change(boardDTO.getTitle(), boardDTO.getContent(), boardDTO.getStatus(), boardDTO.getMatchDate());
 
         boardRepository.save(board);
 
@@ -133,23 +142,53 @@ public class BoardServiceImpl implements BoardService {
         return map;
     }
 
+//    @Override
+//    public Map<String, Object> searchAll(PageRequestDTO pageRequestDTO) {
+//
+//        String searchOption = pageRequestDTO.getSearchOption();
+//        String search = pageRequestDTO.getSearch();
+//        String category = pageRequestDTO.getCategory();
+//        String type = pageRequestDTO.getType();
+//        Pageable pageable = pageRequestDTO.getPageable("boardNo");
+//
+//        Page<Board> result = boardRepository.searchAll(searchOption, search, category, type,  pageable);
+//
+//        List<BoardDTO> dtoList = result.getContent().stream()
+//                .map(board -> modelMapper.map(board, BoardDTO.class)).collect(Collectors.toList());
+//
+//        PageResponseDTO<BoardDTO> pageResponseDTO = PageResponseDTO.<BoardDTO>withAll()
+//                .pageRequestDTO(pageRequestDTO)
+//                .dtoList(dtoList)
+//                .total((int)result.getTotalElements())
+//                .build();
+//
+//        Map<String, Object> map = new HashMap<>();
+//
+//        map.put("success", true);
+//        map.put("data", pageResponseDTO);
+//
+//        return map;
+//    }
+
     @Override
-    public Map<String, Object> searchAll(PageRequestDTO pageRequestDTO) {
+    public Map<String, Object> searchWithReplyCount(PageRequestDTO pageRequestDTO) {
 
         String searchOption = pageRequestDTO.getSearchOption();
         String search = pageRequestDTO.getSearch();
         String category = pageRequestDTO.getCategory();
         String type = pageRequestDTO.getType();
+        Boolean status = pageRequestDTO.getStatus();
+        LocalDate from = pageRequestDTO.getFrom();
+        LocalDate to = pageRequestDTO.getTo();
+
         Pageable pageable = pageRequestDTO.getPageable("boardNo");
 
-        Page<Board> result = boardRepository.searchAll(searchOption, search, category, type,  pageable);
+        Page<BoardListReplyCountDTO> result = boardRepository.searchWithReplyCount(searchOption, search, category, type,
+                status, from, to, pageable);
 
-        List<BoardDTO> dtoList = result.getContent().stream()
-                .map(board -> modelMapper.map(board, BoardDTO.class)).collect(Collectors.toList());
-
-        PageResponseDTO<BoardDTO> pageResponseDTO = PageResponseDTO.<BoardDTO>withAll()
+        PageResponseDTO<BoardListReplyCountDTO> pageResponseDTO = PageResponseDTO.<BoardListReplyCountDTO>withAll()
                 .pageRequestDTO(pageRequestDTO)
-                .dtoList(dtoList)
+                .dtoList(result.getContent())
                 .total((int)result.getTotalElements())
                 .build();
 
@@ -160,6 +199,5 @@ public class BoardServiceImpl implements BoardService {
 
         return map;
     }
-
 
 }
