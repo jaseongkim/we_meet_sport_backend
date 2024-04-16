@@ -15,6 +15,9 @@ public interface BoardService {
 
     Map<String, Object> remove(Long boardNo, String email);
 
-    Map<String, Object> searchAll(PageRequestDTO pageRequestDTO);
+//    Map<String, Object> searchAll(PageRequestDTO pageRequestDTO);
+
+    Map<String, Object> searchWithReplyCount(PageRequestDTO pageRequestDTO);
+
 
 }

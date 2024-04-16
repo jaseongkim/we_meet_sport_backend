@@ -1,10 +1,9 @@
 package com.sport.domain;
 
 import lombok.*;
-import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDate;
 
 @Getter
 @Entity
@@ -18,7 +17,7 @@ import java.util.Date;
         sequenceName = "BOARD_SEQ",
         allocationSize = 1
 )
-public class Board {
+public class Board extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_GENERATOR")
@@ -43,18 +42,16 @@ public class Board {
     private String type;
 
     @Column(nullable = false)
-    private String status;
+    private Boolean status;
 
     @Column(nullable = false)
-    private Date matchDate;
+    private LocalDate matchDate;
 
-    @Column(nullable = false, updatable = false, insertable = false)
-    @ColumnDefault(value = "CURRENT_TIMESTAMP")
-    private Date createdAt;
-
-    public void change(String title, String content) {
+    public void change(String title, String content, boolean status, LocalDate matchDate) {
         this.title = title;
         this.content = content;
+        this.status = status;
+        this.matchDate = matchDate;
     }
 
 }
