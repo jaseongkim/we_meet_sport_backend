@@ -29,6 +29,13 @@ public class Reply extends BaseEntity{
 
     private String replyText;
 
-    private String replyer;
+    private String nickName;
+
+    private String email;
+
+    public void change(String replyText, String nickName){
+        this.replyText = replyText;
+        this.nickName = nickName;
+    }
 
 }
