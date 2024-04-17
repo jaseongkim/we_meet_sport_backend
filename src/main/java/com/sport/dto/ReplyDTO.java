@@ -20,7 +20,9 @@ public class ReplyDTO {
 
     private String replyText;
 
-    private String replyer;
+    private String nickName;
+
+    private String email;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createdAt, updatedAt;

@@ -3,6 +3,7 @@ package com.sport.service;
 import com.sport.domain.Board;
 import com.sport.dto.*;
 import com.sport.repository.BoardRepository;
+import com.sport.repository.ReplyRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.modelmapper.ModelMapper;
@@ -10,6 +11,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
@@ -21,6 +23,8 @@ import java.util.Optional;
 public class BoardServiceImpl implements BoardService {
 
     private final BoardRepository boardRepository;
+
+    private final ReplyRepository replyRepository;
 
     private final ModelMapper modelMapper;
 
@@ -51,13 +55,12 @@ public class BoardServiceImpl implements BoardService {
             Board responseBoard = boardRepository.save(board);
             map.put("success", true);
             map.put("data", responseBoard.getBoardNo());
+            return map;
         } catch (Exception e) {
             map.put("success", false);
             map.put("data",e.getMessage());
             return map;
         }
-
-        return map;
     }
 
     @Override
@@ -116,6 +119,7 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
+    @Transactional
     public Map<String, Object> remove(Long boardNo, String email) {
 
         Map<String, Object> map = new HashMap<>();
@@ -131,13 +135,14 @@ public class BoardServiceImpl implements BoardService {
         }
 
         try{
-            boardRepository.deleteById(board.getBoardNo());
+            replyRepository.deleteAllByBoard_BoardNo(boardNo);
+
+            boardRepository.deleteById(boardNo);
+            map.put("success", true);
         }catch (Exception e) {
             map.put("success", false);
             map.put("data", e.getMessage());
         }
-
-        map.put("success", true);
 
         return map;
     }
