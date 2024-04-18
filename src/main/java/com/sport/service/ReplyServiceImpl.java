@@ -2,16 +2,24 @@ package com.sport.service;
 
 import com.sport.domain.Reply;
 import com.sport.dto.APIUserDTO;
+import com.sport.dto.PageRequestDTO;
+import com.sport.dto.PageResponseDTO;
 import com.sport.dto.ReplyDTO;
 import com.sport.repository.ReplyRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Log4j2
@@ -126,5 +134,28 @@ public class ReplyServiceImpl implements ReplyService{
             map.put("data", "UserDetails is not an instance of APIUserDTO");
             return map;
         }
+    }
+
+    @Override
+    public Map<String, Object> list(Long boardNo, PageRequestDTO pageRequestDTO) {
+
+        Pageable pageable = PageRequest.of(pageRequestDTO.getPageNo() <=0? 0:pageRequestDTO.getPageNo()-1,pageRequestDTO.getPageSize(), Sort.by("replyNo").descending());
+
+        Page<Reply> result = replyRepository.listOfBoard(boardNo, pageable);
+
+        List<ReplyDTO> dtoList = result.getContent().stream().map(reply->modelMapper.map(reply, ReplyDTO.class)).collect(Collectors.toList());
+
+        PageResponseDTO<ReplyDTO> pageResponseDTO = PageResponseDTO.<ReplyDTO>withAll()
+                .pageRequestDTO(pageRequestDTO)
+                .dtoList(dtoList)
+                .total((int)result.getTotalElements())
+                .build();
+
+        Map<String, Object> map = new HashMap<>();
+
+        map.put("success", true);
+        map.put("data", pageResponseDTO);
+
+        return map;
     }
 }

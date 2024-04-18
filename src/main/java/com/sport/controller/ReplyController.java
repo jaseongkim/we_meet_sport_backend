@@ -1,5 +1,6 @@
 package com.sport.controller;
 
+import com.sport.dto.PageRequestDTO;
 import com.sport.dto.ReplyDTO;
 import com.sport.service.ReplyService;
 import lombok.RequiredArgsConstructor;
@@ -47,6 +48,16 @@ public class ReplyController {
         Object principal = authentication.getPrincipal();
 
         map = replyService.remove(replyNo,principal);
+
+        return map;
+    }
+
+    @GetMapping("/{boardNo}")
+    public Map<String, Object> list(@PathVariable("boardNo") Long boardNo, PageRequestDTO pageRequestDTO) {
+
+        Map<String, Object> map = null;
+
+        map = replyService.list(boardNo, pageRequestDTO);
 
         return map;
     }
