@@ -89,16 +89,17 @@ public class BoardServiceImpl implements BoardService {
 
         board.change(boardDTO.getTitle(), boardDTO.getContent(), boardDTO.getStatus(), boardDTO.getMatchDate());
 
-        boardRepository.save(board);
-
-        BoardDTO boardChangeDTO = modelMapper.map(board, BoardDTO.class);
-
-        Map<String, Object> resultMap = Map.of(
-                "success", true,
-                "data", boardChangeDTO
-        );
-
-        return resultMap;
+        try{
+            boardRepository.save(board);
+            BoardDTO boardChangeDTO = modelMapper.map(board, BoardDTO.class);
+            map.put("success", true);
+            map.put("data", boardChangeDTO);
+            return map;
+        }catch (Exception e) {
+            map.put("success", false    );
+            map.put("data", e.getMessage());
+            return map;
+        }
     }
 
     @Override

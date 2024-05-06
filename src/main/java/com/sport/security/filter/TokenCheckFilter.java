@@ -32,7 +32,8 @@ public class TokenCheckFilter extends OncePerRequestFilter {
 
         String path = request.getRequestURI();
 
-        if(!(path.startsWith("/member/api/") || path.startsWith("/board/api/") || path.startsWith("/replies/api/"))) {
+        if(!(path.startsWith("/member/api/") || path.startsWith("/board/api/") || path.startsWith("/replies/api/")
+                || path.startsWith("/alarm/api/"))) {
             log.info("skip TokenCheckFilter");
             filterChain.doFilter(request, response);
             return;

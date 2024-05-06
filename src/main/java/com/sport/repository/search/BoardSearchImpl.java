@@ -117,11 +117,11 @@ public class BoardSearchImpl extends QuerydslRepositorySupport implements BoardS
 
 
             if(searchOption.equals("title")) {
-                booleanBuilder.or(board.title.contains(search));
+                booleanBuilder.and(board.title.contains(search));
             } else if(searchOption.equals("nickName")) {
-                booleanBuilder.or(board.nickName.contains(search));
+                booleanBuilder.and(board.nickName.contains(search));
             } else if(searchOption.equals("content")) {
-                booleanBuilder.or(board.content.contains(search));
+                booleanBuilder.and(board.content.contains(search));
             }
         }
 
