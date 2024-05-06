@@ -60,6 +60,9 @@ dependencies {
     //jwt
     implementation 'io.jsonwebtoken:jjwt:0.9.1'
 
+    //websocket
+
+
     //Querydsl
     implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"
 
