@@ -8,21 +8,23 @@ import java.util.Map;
 
 public interface AlarmService {
 
-    Map<String, Object> apply (AlarmDTO alarmDTO);
+    Map<String, Object> apply (AlarmDTO alarmDTO, Object principal);
 
     Map<String, Object> list(String email);
 
     default Alarm dtoToEntity(AlarmDTO alarmDTO, Board board) {
         Alarm alarm = Alarm.builder()
                 .board(board)
-                .bStatus(alarmDTO.getBStatus())
+                .bStatus(board.getStatus())
                 .title(alarmDTO.getTitle())
                 .writer(alarmDTO.getWriter())
                 .applicant(alarmDTO.getApplicant())
+                .applicantName(alarmDTO.getApplicantName())
                 .type(alarmDTO.getType())
                 .category(alarmDTO.getCategory())
                 .status(alarmDTO.getStatus())
                 .message(alarmDTO.getMessage())
+                .AlarmType("apply")
                 .build();
         return alarm;
     }
@@ -35,10 +37,13 @@ public interface AlarmService {
                 .title(alarm.getTitle())
                 .writer(alarm.getWriter())
                 .applicant(alarm.getApplicant())
+                .applicantName(alarm.getApplicantName())
                 .type(alarm.getType())
                 .category(alarm.getCategory())
                 .status(alarm.getStatus())
                 .message(alarm.getMessage())
+                .alarmType(alarm.getAlarmType())
+                .createdAt(alarm.getCreatedAt())
                 .build();
 
         return alarmDTO;

@@ -2,8 +2,11 @@ package com.sport.domain;
 
 
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "Alarm", indexes = {
@@ -19,6 +22,7 @@ import javax.persistence.*;
         sequenceName = "ALARM_SEQ",
         allocationSize = 1
 )
+@EntityListeners(value = {AuditingEntityListener.class})
 public class Alarm {
 
     @Id
@@ -41,6 +45,9 @@ public class Alarm {
     private String applicant;
 
     @Column
+    private String applicantName;
+
+    @Column
     private String type;
 
     @Column
@@ -49,7 +56,16 @@ public class Alarm {
     @Column
     private String status;
 
+    @Column
+    private String AlarmType;
+
     @Column(nullable = false, length = 4000)
     private String message;
+
+    @CreatedDate
+    @Column(name="createdAt", updatable = false)
+    private LocalDateTime createdAt;
+
+
 
 }
