@@ -49,6 +49,10 @@ public class BoardController {
 
         Map<String, Object> map = null;
 
+//        String email = principal.getName();
+
+//        log.info("-----------------------------------------------------"+email);
+
         map = boardService.getBoardByNo(boardNo);
 
         return map;

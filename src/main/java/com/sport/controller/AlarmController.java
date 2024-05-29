@@ -5,6 +5,7 @@ import com.sport.dto.AlarmStatusDTO;
 import com.sport.service.AlarmService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
@@ -20,20 +21,19 @@ public class AlarmController {
     private final AlarmService alarmService;
 
     @PostMapping("/api")
-    public Map<String, Object> apply(@RequestBody AlarmDTO alarmDTO , Principal principal) {
+    public Map<String, Object> apply(@RequestBody AlarmDTO alarmDTO, Authentication authentication) {
 
         Map<String, Object> map = null;
-        String email = principal.getName();
 
-        alarmDTO.setApplicant(email);
+        Object principal = authentication.getPrincipal();
 
-        map = alarmService.apply(alarmDTO);
+        map = alarmService.apply(alarmDTO,principal);
 
         return map;
     }
 
     @GetMapping("/api")
-    public Map<String, Object> list(Principal principal){
+    public Map<String, Object> list(Principal principal) {
         Map<String, Object> map = null;
 
         String email = principal.getName();
@@ -52,12 +52,8 @@ public class AlarmController {
         AlarmStatusDTO.setEmail(email);
 
 
-
         return map;
     }
-
-
-
 
 
 }

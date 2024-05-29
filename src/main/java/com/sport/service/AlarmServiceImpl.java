@@ -2,6 +2,7 @@ package com.sport.service;
 
 import com.sport.domain.Alarm;
 import com.sport.domain.Board;
+import com.sport.dto.APIUserDTO;
 import com.sport.dto.AlarmDTO;
 import com.sport.repository.AlarmRepository;
 import com.sport.repository.BoardRepository;
@@ -28,18 +29,43 @@ public class AlarmServiceImpl implements AlarmService {
     private final ModelMapper modelMapper;
 
     @Override
-    public Map<String, Object> apply(AlarmDTO alarmDTO) {
+    public Map<String, Object> apply(AlarmDTO alarmDTO, Object principal) {
 
         Map<String, Object> map = new HashMap<>();
+
+        if (principal instanceof APIUserDTO) {
+            // principal 객체를 APIUserDTO 타입으로 캐스팅
+            APIUserDTO apiUserDTO = (APIUserDTO) principal;
+            alarmDTO.setApplicant(apiUserDTO.getEmail());
+            alarmDTO.setApplicantName(apiUserDTO.getNickName());
+        } else {
+            // principal 객체가 APIUserDTO 타입이 아닌 경우의 처리
+            log.info("UserDetails is not an instance of APIUserDTO");
+            map.put("success", false);
+            map.put("data", "UserDetails is not an instance of APIUserDTO");
+            return map;
+        }
 
         Optional<Board> result = boardRepository.findById(alarmDTO.getBoardNo());
 
         Board board = result.orElseThrow();
 
+        Optional<Alarm> alarmResult = alarmRepository.findAlarmByBoardAndApplicant(board, alarmDTO.getApplicant());
+
+        try{
+            Alarm alarmExists  = alarmResult.orElseThrow();
+            if(alarmExists != null) {
+                map.put("success", false);
+                map.put("data", "이미 신청한 내용이 있습니다.");
+                return map;
+            }
+        } catch (Exception e) {
+
+        }
+
         alarmDTO.setWriter(board.getApiUser().getEmail());
-        alarmDTO.setBStatus(board.getStatus());
         alarmDTO.setTitle(board.getTitle());
-        alarmDTO.setStatus("progress ");
+        alarmDTO.setStatus("progress");
         alarmDTO.setCategory(board.getCategory());
         alarmDTO.setType(board.getType());
 
